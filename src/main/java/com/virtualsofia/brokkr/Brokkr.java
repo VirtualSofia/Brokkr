@@ -1,10 +1,15 @@
 package com.virtualsofia.brokkr;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.virtualsofia.brokkr.item.ModItems;
+import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
-
+import net.minecraft.core.HolderLookup;
 import com.mojang.logging.LogUtils;
-
+import net.minecraft.data.PackOutput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -30,6 +35,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -114,7 +120,16 @@ public class Brokkr
         LOGGER.info("HELLO from server starting");
 
     }
+    public static class MyRecipeProvider extends RecipeProvider {
+        public MyRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+            super(output, lookupProvider);
+        }
 
+        @Override
+        protected void buildRecipes(RecipeOutput output) {
+            // Register your recipes here.
+        }
+    }
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
@@ -125,6 +140,14 @@ public class Brokkr
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+    }
+    @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = MODID)
+    public static class MyDatagenHandler {
+
+        @SubscribeEvent
+        public static void gatherData(GatherDataEvent event) {
+            event.createProvider(MyRecipeProvider::new);
         }
     }
 }
