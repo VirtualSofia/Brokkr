@@ -19,6 +19,8 @@ build
 
 # other
 eclipse
+vscode
+.vscode
 run
 runs
 run-data
