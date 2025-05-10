@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import com.virtualsofia.brokkr.item.ModItems;
+import com.virtualsofia.brokkr.liquid.ModLiquids;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.*;
@@ -96,7 +97,7 @@ public class Brokkr
 
         //REGISTER
         ModItems.register(modEventBus);
-
+        ModLiquids.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
