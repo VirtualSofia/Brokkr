@@ -1,10 +1,14 @@
 package com.virtualsofia.brokkr;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import com.virtualsofia.brokkr.item.ModItems;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.CraftingInput;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
 import net.minecraft.core.HolderLookup;
@@ -15,10 +19,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -70,6 +70,10 @@ public class Brokkr
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
     private static final Logger LOGGER = LogUtils.getLogger();
+
+
+    private static final int IngotMilibuckets = 250;
+
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public Brokkr(IEventBus modEventBus, ModContainer modContainer)
@@ -127,7 +131,8 @@ public class Brokkr
 
         @Override
         protected void buildRecipes(RecipeOutput output) {
-            // Register your recipes here.
+            // Register your recipes here
+
         }
     }
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
