@@ -3,6 +3,9 @@ package com.virtualsofia.brokkr;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import com.virtualsofia.brokkr.block.BlockRegistry;
+import com.virtualsofia.brokkr.fluid.FluidRegistry;
+import com.virtualsofia.brokkr.fluid.ModFluidTypes;
 import com.virtualsofia.brokkr.item.ModItems;
 import com.virtualsofia.brokkr.liquid.ModLiquids;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -82,6 +85,9 @@ public class Brokkr
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
+        FluidRegistry.FLUIDS.register(modEventBus);
+        ModFluidTypes.FLUID_TYPES.register(modEventBus);
+        BlockRegistry.BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
