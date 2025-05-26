@@ -1,0 +1,11 @@
+{
+  "values": {
+
+    "brokkr:test_item": {
+      "value": {
+        "amount": 12,
+        "chance": 0.2
+      }
+    }
+  }
+}

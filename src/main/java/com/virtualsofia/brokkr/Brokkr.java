@@ -14,6 +14,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import org.slf4j.Logger;
 import net.minecraft.core.HolderLookup;
 import com.mojang.logging.LogUtils;
@@ -45,6 +46,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import static com.virtualsofia.brokkr.datamaps.ExampleData.EXAMPLE_DATA;
+
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Brokkr.MODID)
 public class Brokkr
@@ -73,7 +76,7 @@ public class Brokkr
             .displayItems((parameters, output) -> {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
             }).build());
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
 
     private static final int IngotMilibuckets = 250;
@@ -82,6 +85,9 @@ public class Brokkr
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public Brokkr(IEventBus modEventBus, ModContainer modContainer)
     {
+
+
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -146,6 +152,11 @@ public class Brokkr
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
+
+        @SubscribeEvent
+        private static void registerDataMapTypes(RegisterDataMapTypesEvent event) {
+            event.register(EXAMPLE_DATA);
+        }
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
@@ -162,4 +173,7 @@ public class Brokkr
             event.createProvider(MyRecipeProvider::new);
         }
     }
+
+
+
 }
