@@ -18,6 +18,8 @@ version = mod_version
 group = mod_group_id
 
 repositories {
+    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
+    maven { url = "https://maven.createmod.net" }
     mavenLocal()
 }
 
@@ -112,6 +114,8 @@ configurations {
 }
 
 dependencies {
+    jarJar(implementation("com.tterrag.registrate:Registrate:${registrate_version}"))
+    jarJar("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"

@@ -3,6 +3,8 @@ package com.virtualsofia.brokkr;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.virtualsofia.brokkr.block.BlockRegistry;
 import com.virtualsofia.brokkr.fluid.FluidRegistry;
 import com.virtualsofia.brokkr.fluid.ModFluidTypes;
@@ -45,10 +47,16 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+
+import net.minecraft.resources.ResourceKey;
+
+
+
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Brokkr.MODID)
-public class Brokkr
-{
+public class Brokkr {
+
+
     // Define mod id in a common place for everything to reference
     public static final String MODID = "brokkr";
     // Directly reference a slf4j logger
@@ -80,8 +88,7 @@ public class Brokkr
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public Brokkr(IEventBus modEventBus, ModContainer modContainer)
-    {
+    public Brokkr(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -112,25 +119,24 @@ public class Brokkr
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
 
     }
+
     // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
 
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
+    public void onServerStarting(ServerStartingEvent event) {
 
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
 
     }
+
     public static class MyRecipeProvider extends RecipeProvider {
         public MyRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
             super(output, lookupProvider);
@@ -142,18 +148,18 @@ public class Brokkr
 
         }
     }
+
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
+    public static class ClientModEvents {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
+        public static void onClientSetup(FMLClientSetupEvent event) {
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
+
     @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = MODID)
     public static class MyDatagenHandler {
 
@@ -161,5 +167,14 @@ public class Brokkr
         public static void gatherData(GatherDataEvent event) {
             event.createProvider(MyRecipeProvider::new);
         }
+    }
+
+
+    private static final BrokkrRegistrate REGISTRATE = BrokkrRegistrate.create(MODID);
+
+    public static BrokkrRegistrate registrate() {
+
+        return REGISTRATE;
+
     }
 }
