@@ -1,32 +1,24 @@
 package com.virtualsofia.brokkr;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.virtualsofia.brokkr.block.BlockRegistry;
-import com.virtualsofia.brokkr.fluid.FluidRegistry;
-import com.virtualsofia.brokkr.fluid.ModFluidTypes;
+import com.virtualsofia.brokkr.fluid.AllFluids;
 import com.virtualsofia.brokkr.item.ModItems;
 import com.virtualsofia.brokkr.liquid.ModLiquids;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.CraftingInput;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
 import net.minecraft.core.HolderLookup;
 import com.mojang.logging.LogUtils;
 import net.minecraft.data.PackOutput;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.api.distmarker.Dist;
@@ -46,10 +38,6 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-
-import net.minecraft.resources.ResourceKey;
-
 
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -89,11 +77,14 @@ public class Brokkr {
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public Brokkr(IEventBus modEventBus, ModContainer modContainer) {
+        REGISTRATE.registerEventListeners(modEventBus);
+        AllFluids.register();
+
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        FluidRegistry.FLUIDS.register(modEventBus);
-        ModFluidTypes.FLUID_TYPES.register(modEventBus);
+
         BlockRegistry.BLOCKS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);

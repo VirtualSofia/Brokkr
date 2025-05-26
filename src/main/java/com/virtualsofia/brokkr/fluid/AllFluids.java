@@ -1,6 +1,8 @@
 package com.virtualsofia.brokkr.fluid;
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
+//import com.simibubi.create.AllTags;
+//import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.FluidBuilder.FluidTypeFactory;
 import com.tterrag.registrate.util.entry.FluidEntry;
@@ -15,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -22,23 +25,23 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-i
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-
+import net.createmod.catnip.theme.Color;
 
 
 public class AllFluids {
 
     private static final BrokkrRegistrate REGISTRATE = Brokkr.registrate();
 
-    public static final FluidEntry< BaseFlowingFluid.Flowing> CHOCOLATE =
-            REGISTRATE.standardFluid("chocolate",
+    public static final FluidEntry< BaseFlowingFluid.Flowing> FLUID =
+            REGISTRATE.standardFluid("fluid",
                             SolidRenderedPlaceableFluidType.create(0x622020,
-                                    () -> 1f / 32f * AllConfigs.client().chocolateTransparencyMultiplier.getF()))
-                    .lang("Chocolate")
-                    .tag(AllTags.commonFluidTag("chocolates"))
+                                    () -> 1f / 32f ))
+                    .lang("Fluid")
+                    //.tag(AllTags.commonFluidTag("chocolates"))
                     .properties(b -> b.viscosity(1500)
                             .density(1400))
                     .fluidProperties(p -> p.levelDecreasePerBlock(2)
@@ -50,7 +53,25 @@ public class AllFluids {
                     .build()
                     .register();
 
+  public static final FluidEntry< BaseFlowingFluid.Flowing> ANOTHERFLUID =
+            REGISTRATE.standardFluid("another_fluid",
+                            SolidRenderedPlaceableFluidType.create(0x622020,
+                                    () -> 1f / 32f ))
+                    .lang("Another Fluid")
+                    //.tag(AllTags.commonFluidTag("chocolates"))
+                    .properties(b -> b.viscosity(1500)
+                            .density(1400))
+                    .fluidProperties(p -> p.levelDecreasePerBlock(2)
+                            .tickRate(25)
+                            .slopeFindDistance(3)
+                            .explosionResistance(100f))
+                    .block()
+                    .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
+                    .build()
+                    .register();
 
+    public static void register() {
+    }
 
     public static abstract class TintedFluidType extends FluidType {
 
