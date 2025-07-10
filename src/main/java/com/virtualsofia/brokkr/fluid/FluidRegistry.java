@@ -1,7 +1,7 @@
 package com.virtualsofia.brokkr.fluid;
 
 import com.virtualsofia.brokkr.Brokkr;
-import com.virtualsofia.brokkr.block.BlockRegistry;
+import com.virtualsofia.brokkr.block.ModBlocks;
 import com.virtualsofia.brokkr.fluid.ModFluidTypes;
 import com.virtualsofia.brokkr.fluid.TestFluid;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,7 +32,7 @@ public class FluidRegistry {
             .slopeFindDistance(4)
             .levelDecreasePerBlock(1)
             .tickRate(30)
-            .block(BlockRegistry.TEST_FLUID_BLOCK);
+            .block(ModBlocks.TEST_FLUID_BLOCK);
 
     public static void register(IEventBus eventBus) {
         FLUIDS.register(eventBus);

@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import com.virtualsofia.brokkr.fluid.FluidRegistry;
 
-public class BlockRegistry {
+public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Brokkr.MODID);
 
     //The TestFluidBlock class should be able to work for any fluid, could be changed to BaseFluidBlock
