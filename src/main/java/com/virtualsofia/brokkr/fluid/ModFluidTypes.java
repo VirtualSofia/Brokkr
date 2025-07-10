@@ -3,10 +3,8 @@ import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 //import com.simibubi.create.AllTags;
 //import com.simibubi.create.infrastructure.config.AllConfigs;
-import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.FluidBuilder.FluidTypeFactory;
 import com.tterrag.registrate.util.entry.FluidEntry;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.virtualsofia.brokkr.Brokkr;
 import com.virtualsofia.brokkr.BrokkrRegistrate;
 import net.minecraft.client.Camera;
@@ -15,9 +13,9 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.MapColor;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -32,7 +30,7 @@ import java.util.function.Supplier;
 import net.createmod.catnip.theme.Color;
 
 
-public class AllFluids {
+public class ModFluidTypes {
 
     private static final BrokkrRegistrate REGISTRATE = Brokkr.registrate();
 
@@ -70,7 +68,8 @@ public class AllFluids {
                     .build()
                     .register();
 
-    public static void register() {
+    public static void register(IEventBus modEventBus) {
+
     }
 
     public static abstract class TintedFluidType extends FluidType {

@@ -3,8 +3,7 @@ package com.virtualsofia.brokkr;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import com.virtualsofia.brokkr.block.BlockRegistry;
-import com.virtualsofia.brokkr.fluid.FluidRegistry;
+import com.virtualsofia.brokkr.block.ModBlocks;
 import com.virtualsofia.brokkr.fluid.ModFluidTypes;
 import com.virtualsofia.brokkr.item.ModItems;
 import com.virtualsofia.brokkr.liquid.ModLiquids;
@@ -85,13 +84,10 @@ public class Brokkr
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        FluidRegistry.FLUIDS.register(modEventBus);
-        ModFluidTypes.FLUID_TYPES.register(modEventBus);
-        BlockRegistry.BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
+        ModLiquids.register(modEventBus);
+        ModFluidTypes.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModItems.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
@@ -102,8 +98,6 @@ public class Brokkr
         NeoForge.EVENT_BUS.register(this);
 
         //REGISTER
-        ModItems.register(modEventBus);
-        ModLiquids.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -161,5 +155,9 @@ public class Brokkr
         public static void gatherData(GatherDataEvent event) {
             event.createProvider(MyRecipeProvider::new);
         }
+    }
+    private static final BrokkrRegistrate REGISTRATE = BrokkrRegistrate.create(MODID);
+    public static BrokkrRegistrate registrate() {
+        return REGISTRATE;
     }
 }
